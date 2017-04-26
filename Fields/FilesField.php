@@ -106,6 +106,7 @@ class FilesField extends CharField
         $commonData = $this->getCommonData();
 
         $data = [
+            'url' => Phact::app()->request->getUrl(),
             'uploadUrl' => $this->routeToUrl($this->uploadUrl),
             'sortUrl' => $this->routeToUrl($this->sortUrl),
             'deleteUrl' => $this->routeToUrl($this->deleteUrl),

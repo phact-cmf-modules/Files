@@ -80,12 +80,7 @@ class UploadController extends BackendController
             $related->{$manager->to} = $pk;
             $related->save();
         }
-
-        try {
-            unlink($path);
-        } catch (\Exception $e) {
-
-        }
+        
         return true;
     }
 }
