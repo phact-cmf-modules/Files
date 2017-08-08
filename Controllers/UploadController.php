@@ -50,10 +50,9 @@ class UploadController extends BackendController
             $manager = $model->{$name};
             $relatedClass = $manager->getModel()->className();
             foreach($pkList as $position => $pk) {
-                if ($related = $relatedClass::objects()->filter(['pk' => $pk])->get()){
-                    $related->{$field} = $position;
-                    $related->save();
-                };
+                $relatedClass::objects()->filter(['pk' => $pk])->update([
+                    $field => $position
+                ]);
             }
         }
 
