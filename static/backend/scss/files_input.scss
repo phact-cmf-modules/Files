@@ -105,8 +105,9 @@
 
         .item-wrapper {
           position: relative;
+          text-align: center;
 
-          .remove-link {
+          .remove-link, .edit-link {
             position: absolute;
             margin: 0;
             text-align: center;
@@ -119,6 +120,13 @@
             background-color: #fff;
             color: #000;
             font-size: 10px;
+            text-decoration: none;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+          }
+
+          .edit-link {
+            left: 10px;
+            right: auto;
           }
         }
       }

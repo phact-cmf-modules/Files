@@ -61,6 +61,10 @@ class FilesField extends CharField
     public $fileField = 'file';
     public $sortField = 'position';
 
+    public $itemAdmin = null;
+
+    protected $_itemAdmin = null;
+
     public function setDefaultValidators()
     {
         if ($this->required) {
@@ -89,6 +93,14 @@ class FilesField extends CharField
         return $model->className();
     }
 
+    public function getItemAdmin()
+    {
+        if (!$this->_itemAdmin && $this->itemAdmin) {
+            $this->_itemAdmin = new $this->itemAdmin;
+        }
+        return $this->_itemAdmin;
+    }
+
     public function getCommonData()
     {
         $instance = $this->getForm()->instance;
@@ -104,9 +116,9 @@ class FilesField extends CharField
     public function getFieldData($encode = true)
     {
         $commonData = $this->getCommonData();
-
         $data = [
             'url' => Phact::app()->request->getUrl(),
+            
             'uploadUrl' => $this->routeToUrl($this->uploadUrl),
             'sortUrl' => $this->routeToUrl($this->sortUrl),
             'deleteUrl' => $this->routeToUrl($this->deleteUrl),

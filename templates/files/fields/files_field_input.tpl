@@ -39,8 +39,11 @@
         </section>
 
         <script type='text/javascript'>
-            $('#{$id}').filesField({raw $field->getFieldData()});
+            $('#{$id}').data('field', $('#{$id}').filesField({raw $field->getFieldData()}));
         </script>
+
+        {block 'js'}
+        {/block}
     </div>
 {else}
     <div class="files-input unavailable">
