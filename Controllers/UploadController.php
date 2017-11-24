@@ -15,6 +15,7 @@
 namespace Modules\Files\Controllers;
 
 use Modules\Admin\Controllers\BackendController;
+use Modules\Files\Interfaces\FileSortableInterface;
 use Modules\Files\Traits\UploadTrait;
 use Phact\Storage\Files\LocalFile;
 
@@ -49,14 +50,18 @@ class UploadController extends BackendController
             $model = new $class;
             $manager = $model->{$name};
             $relatedClass = $manager->getModel()->className();
+            if ($relatedClass instanceof FileSortableInterface) {
+                $relatedClass::beforeSort($pkList);
+            }
             foreach($pkList as $position => $pk) {
                 $relatedClass::objects()->filter(['pk' => $pk])->update([
                     $field => $position
                 ]);
             }
+            if ($relatedClass instanceof FileSortableInterface) {
+                $relatedClass::afterSort($pkList);
+            }
         }
-
-
     }
 
     public function saveModel($path)
