@@ -46,7 +46,7 @@ class UploadFileField extends FileField
 
     public $notAllowedMessage = 'Извините, можно загрузить только указанные типы файлов';
 
-    public $accept = '*';
+    public $accept = ['*/*'];
 
     public $types = [];
 
