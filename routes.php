@@ -15,5 +15,15 @@ return [
         'route' => '/delete',
         'target' => [\Modules\Files\Controllers\UploadController::class, 'delete'],
         'name' => 'delete'
-    ]
+    ],
+    [
+        'route' => '/large/upload',
+        'target' => [\Modules\Files\Controllers\LargeUploadController::class, 'upload'],
+        'name' => 'large_upload'
+    ],
+    [
+        'route' => '/large/delete',
+        'target' => [\Modules\Files\Controllers\LargeUploadController::class, 'delete'],
+        'name' => 'large_delete'
+    ],
 ];
