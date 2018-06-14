@@ -26,6 +26,7 @@
 {/block}
 
 {block 'js'}
+    {inline_js}
     <script>
         $(function () {
             $(document).on('click', '#{$id} .edit-link', function (e) {
@@ -45,4 +46,5 @@
             });
         });
     </script>
+    {/inline_js}
 {/block}

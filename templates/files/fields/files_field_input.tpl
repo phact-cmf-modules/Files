@@ -38,12 +38,15 @@
             </p>
         </section>
 
+        {inline_js}
         <script type='text/javascript'>
             $('#{$id}').data('field', $('#{$id}').filesField({raw $field->getFieldData()}));
         </script>
+        {/inline_js}
 
         {block 'js'}
         {/block}
+
     </div>
 {else}
     <div class="files-input unavailable">
