@@ -1,0 +1,27 @@
+{
+  "name": "phact-cmf-modules/files",
+  "homepage": "https://github.com/phact-cmf-modules/Files",
+  "description": "Files module for phact CMF",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Modules\\Files\\": ""
+    }
+  },
+  "require": {
+    "php": "^7.1.3",
+    "phact-cmf/phact": "^1.0.3"
+  },
+  "authors": [
+    {
+      "name": "Anton Okulov",
+      "email": "qantus@mail.ru",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "qantus@mail.ru",
+    "issues": "https://github.com/phact-cmf-modules/Files/issues"
+  }
+}
