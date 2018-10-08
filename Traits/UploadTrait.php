@@ -14,24 +14,29 @@
 
 namespace Modules\Files\Traits;
 
-use Phact\Helpers\Paths;
+use Phact\Components\PathInterface;
+use Phact\Main\Phact;
 
 trait UploadTrait
 {
     public $ds = DIRECTORY_SEPARATOR;
-    public $tempDir = 'temp';
 
+    public $tempDir;
 
     /**
-     * Загрузка данных
+     * Uploading data
      */
     public function upload()
     {
-        $this->tempDir = Paths::get('www') . '/temp';
-
+        if (!$this->tempDir) {
+            /** @var $paths PathInterface */
+            if (($app = Phact::app()) && ($paths = $app->getComponent(PathInterface::class))) {
+                $this->tempDir = $paths->get('www') . $this->ds . 'temp';
+            }
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $temp_dir = $this->tempDir . '/' . $_GET['flowIdentifier'];
-            $chunk_file = $temp_dir . '/' . $_GET['flowFilename'] . '.part' . $_GET['flowChunkNumber'];
+            $temp_dir = $this->tempDir . $this->ds . $_GET['flowIdentifier'];
+            $chunk_file = $temp_dir . $this->ds . $_GET['flowFilename'] . '.part' . $_GET['flowChunkNumber'];
             if (file_exists($chunk_file)) {
                 header("HTTP/1.0 200 Ok");
             } else {
@@ -60,14 +65,14 @@ trait UploadTrait
             if (move_uploaded_file($file['tmp_name'], $dest_file)) {
                 // check if all the parts present, and create the final destination file
                 $name = $_POST['flowFilename'];
-                $fileName = join($this->ds, [$this->tempDir, $name]);
+                $fileName = implode($this->ds, [$this->tempDir, $name]);
                 $this->createFileFromChunks($temp_dir, $_POST['flowFilename'], $_POST['flowChunkSize'], $_POST['flowTotalSize'], $fileName);
             }
         }
     }
 
     /**
-     * Рекурсивное удаление папки
+     * Recursive delete directory
      * @param $dir
      * @return bool|null
      */
@@ -77,10 +82,10 @@ trait UploadTrait
             $objects = scandir($dir);
             foreach ($objects as $object) {
                 if ($object != "." && $object != "..") {
-                    if (filetype($dir . "/" . $object) == "dir") {
-                        $this->rrmdir($dir . "/" . $object);
+                    if (filetype($dir . $this->ds . $object) == "dir") {
+                        $this->rrmdir($dir . $this->ds . $object);
                     } else {
-                        unlink($dir . "/" . $object);
+                        unlink($dir . $this->ds . $object);
                     }
                 }
             }
@@ -91,7 +96,7 @@ trait UploadTrait
     }
 
     /**
-     * Сборка файлов из чанка
+     * Create file from chunks
      * @param $temp_dir
      * @param $fileName
      * @param $chunkSize
@@ -116,7 +121,7 @@ trait UploadTrait
             // create the final destination file
             if (($fp = fopen($finalDestination, 'w')) !== false) {
                 for ($i = 1; $i <= $total_files; $i++) {
-                    fwrite($fp, file_get_contents($temp_dir . '/' . $fileName . '.part' . $i));
+                    fwrite($fp, file_get_contents($temp_dir . $this->ds . $fileName . '.part' . $i));
                 }
                 fclose($fp);
 

@@ -2,7 +2,9 @@
 {if $instance->id}
     <div class="files-input" id="{$id}">
         <section class="files-drop">
-            <p class="info">Перетащите файл сюда или нажмите для загрузки</p>
+            <p class="info">
+                {t "Files.main" "Drag files here or click for upload"}
+            </p>
             <div class="progress">
                 <div class="meter progress_bar"></div>
             </div>
@@ -16,7 +18,7 @@
                     {if $link}
                         <li data-pk="{$instance->id}">
                             <span class="name">
-                                Текущий файл:
+                                {t "Files.main" "Current file"}:
 
                                 <a class="name" href="{$link}" target="_blank">
                                     {$link}
@@ -27,7 +29,7 @@
                             <span class="remove-link">
                                 <span class="remove">&times;</span>
                                 <span class="text">
-                                    Удалить
+                                    {t "Files.main" "Delete"}
                                 </span>
                             </span>
                         </li>
@@ -36,7 +38,7 @@
             {/block}
 
             <p class="empty-info {if $link}hide{/if}">
-                Файл еще не загружен
+                {t "Files.main" "File not loaded yet"}
             </p>
         </section>
 
@@ -52,7 +54,7 @@
 {else}
     <div class="files-input unavailable">
         <div class="info">
-            Пожалуйста, сохраните объект для загрузки файла
+            {t "Files.main" "Please save the object to load the file"}
         </div>
     </div>
 {/if}

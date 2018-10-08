@@ -17,6 +17,8 @@ namespace Modules\Files\Fields;
 use Modules\Files\Validators\RequiredFilesValidator;
 use Phact\Form\Fields\CharField;
 use Phact\Main\Phact;
+use Phact\Request\HttpRequestInterface;
+use Phact\Translate\Translate;
 
 class FilesField extends CharField
 {
@@ -46,11 +48,11 @@ class FilesField extends CharField
      */
     public $limit = 20;
 
-    public $limitMessage = 'Извините, единовременно можно загрузить до 20 файлов';
+    public $limitMessage;
 
-    public $maxSizeMessage = 'Извините, превышен размер загружаемого файла';
+    public $maxSizeMessage;
 
-    public $notAllowedMessage = 'Извините, можно загрузить только указанные типы файлов';
+    public $notAllowedMessage;
 
     public $accept = '*';
 
@@ -64,6 +66,22 @@ class FilesField extends CharField
     public $itemAdmin = null;
 
     protected $_itemAdmin = null;
+
+    public function __construct()
+    {
+        /** @var Translate $translate */
+        if ($translate = self::fetchComponent(Translate::class)) {
+            if (!$this->limitMessage) {
+                $this->limitMessage = $translate->t('Files.main', 'Sorry, you can upload up to 20 files at a time');
+            }
+            if (!$this->maxSizeMessage) {
+                $this->maxSizeMessage = $translate->t('Files.main', 'Sorry, uploaded file size exceeded');
+            }
+            if (!$this->notAllowedMessage) {
+                $this->notAllowedMessage = $translate->t('Files.main', 'Sorry, only specified file types can be uploaded');
+            }
+        }
+    }
 
     public function setDefaultValidators()
     {
@@ -116,9 +134,16 @@ class FilesField extends CharField
     public function getFieldData($encode = true)
     {
         $commonData = $this->getCommonData();
+
+        $url = '';
+        /** @var HttpRequestInterface $request */
+        if ($request = self::fetchComponent(HttpRequestInterface::class)) {
+            $url = $request->getUrl();
+        }
+
         $data = [
-            'url' => Phact::app()->request->getUrl(),
-            
+            'url' => $url,
+
             'uploadUrl' => $this->routeToUrl($this->uploadUrl),
             'sortUrl' => $this->routeToUrl($this->sortUrl),
             'deleteUrl' => $this->routeToUrl($this->deleteUrl),
@@ -146,8 +171,11 @@ class FilesField extends CharField
 
     public function routeToUrl($url)
     {
-        if (mb_strpos($url, ':', 0, 'UTF-8') !== false) {
-            $url = Phact::app()->router->url($url);
+        /** @var RouterInterface $router */
+        if ($router = self::fetchComponent(RouterInterface::class)) {
+            if (mb_strpos($url, ':', 0, 'UTF-8') !== false) {
+                $url = $router->url($url);
+            }
         }
         return $url;
     }

@@ -13,9 +13,9 @@ const Flow = require('@flowjs/flow.js');
       deleteData: {},
 
       limit: 20,
-      limitMessage: 'Извините, единовременно можно загрузить до 20 файлов',
-      maxSizeMessage: 'Извините, превышен размер загружаемого файла',
-      notAllowedMessage: 'Извините, можно загрузить только указанные типы файлов',
+      limitMessage: 'Sorry, you can upload up to 20 files at a time',
+      maxSizeMessage: 'Sorry, uploaded file size exceeded',
+      notAllowedMessage: 'Sorry, only specified file types can be uploaded',
       accept: '*', // For images: 'image/*'
       types: [], // For images: ["image/gif", "image/jpeg", "image/png"],
 
