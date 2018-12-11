@@ -28,19 +28,19 @@ class FilesField extends CharField
      * Sort route
      * @var
      */
-    public $sortUrl = 'files:sort';
+    public $sortUrl = '/admin/files/sort';
 
     /**
      * Upload route
      * @var
      */
-    public $uploadUrl = 'files:upload';
+    public $uploadUrl = '/admin/files/upload';
 
     /**
      * Delete route
      * @var
      */
-    public $deleteUrl = 'files:delete';
+    public $deleteUrl = '/admin/files/delete';
 
     /**
      * Limit for one upload
