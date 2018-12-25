@@ -19,6 +19,7 @@ use Phact\Form\Fields\CharField;
 use Phact\Main\Phact;
 use Phact\Request\HttpRequestInterface;
 use Phact\Translate\Translate;
+use Phact\Router\RouterInterface;
 
 class FilesField extends CharField
 {
