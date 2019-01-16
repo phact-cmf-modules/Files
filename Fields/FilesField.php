@@ -23,6 +23,10 @@ use Phact\Router\RouterInterface;
 
 class FilesField extends CharField
 {
+    /**
+    * Files input template
+    * @var
+    */
     public $inputTemplate = 'files/fields/images_field_input.tpl';
 
     /**
@@ -157,7 +161,6 @@ class FilesField extends CharField
             'maxFileSize' => $this->maxFileSize,
             'accept' => $this->accept,
             'types' => $this->types,
-
 
             'limitMessage' => $this->limitMessage,
             'maxSizeMessage' => $this->maxSizeMessage,
