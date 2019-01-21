@@ -71,21 +71,21 @@ const Flow = require('@flowjs/flow.js');
         const fileObject = file.file;
 
         if (me.options.types && me.options.types.length && $.inArray(fileObject.type, me.options.types) < 0) {
-          $.mnotify(me.options.notAllowedMessage);
+          alert(me.options.notAllowedMessage);
           return false;
         }
 
 
         if (me.options.maxFileSize < fileObject.size) {
-          $.mnotify(me.options.maxSizeMessage);
+          alert(me.options.maxSizeMessage);
           return false;
         }
 
         if (me.counter < me.options.limit) {
           me.counter++;
 
-          if (me.counter == me.options.limit) {
-            $.mnotify(me.options.limitMessage);
+          if (me.counter > me.options.limit) {
+            alert(me.options.limitMessage);
           }
         } else {
           return false;
